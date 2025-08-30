@@ -29,7 +29,7 @@ const char temporaryWavetable3[] = {
 
 void initialize() {
     CLKPR = 0x80;
-    CLRPR = 0x01;
+    CLKPR = 0x01;
     TCCR1A = 0x00;
     TCCR1B = 0x0A;
     TCCR1C = 0x00;
@@ -39,7 +39,7 @@ void initialize() {
 
     TCCR2A = 0x23;
     TCCR2B = 0x09;
-    OCR2A = 63;
+    OCR2A = 127;
     OCR2B = 0;
     SET(DDRD, 3);
 }
@@ -55,7 +55,7 @@ void calculateSound() {
         tones[i].advancePhase(1);
     }
     
-    currentSample /= 4;
+    currentSample /= 2;
 }
 
 SIGNAL(TIMER1_COMPA_vect){
