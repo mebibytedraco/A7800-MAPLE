@@ -86,7 +86,7 @@ public:
         }
     }
 
-    void setWavetable(char* newWavetable) {
+    void setWavetable(const char* newWavetable) {
 
         int i = WAVETABLE_WIDTH;
 
@@ -104,3 +104,4 @@ public:
 };
 
 #endif
+

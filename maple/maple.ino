@@ -28,17 +28,20 @@ const char temporaryWavetable3[] = {
 };
 
 void initialize() {
+    CLKPR = 0x80;
+    CLRPR = 0x01;
     TCCR1A = 0x00;
     TCCR1B = 0x0A;
     TCCR1C = 0x00;
-    OCR1A = 150;
+    OCR1A = 75;
     SET(TIMSK1, OCIE1A);
     sei();
 
-    TCCR2A = 0xB3;
-    TCCR2B = 0x01;
-    OCR2A = OCR2B = 0;
-    SET(DDRB, 3);
+    TCCR2A = 0x23;
+    TCCR2B = 0x09;
+    OCR2A = 63;
+    OCR2B = 0;
+    SET(DDRD, 3);
 }
 
 
@@ -51,17 +54,17 @@ void calculateSound() {
         currentSample += tones[i].generateSample();
         tones[i].advancePhase(1);
     }
+    
+    currentSample /= 4;
 }
 
 SIGNAL(TIMER1_COMPA_vect){
     calculateSound();
-    OCR2A = OCR2B = currentSample;
+    OCR2B = currentSample;
 }
 
 int main ()
 {
-    DDRD = DDRD | B00001000;
-
     initialize();
 
     tones[0].setPitch(PITCH(NOTE_A4));
